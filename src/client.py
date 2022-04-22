@@ -4,6 +4,7 @@ from queue import Queue
 
 class Client():
    def __init__(self):
+      # tasks = ['tasks']
       self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
       self.client_socket.connect(('localhost', 8080))
       self.usr = "testing"
@@ -13,7 +14,8 @@ class Client():
    def receive_msg(self):
       while True:
          data = self.client_socket.recv(4096)
-         print(f"client receiving {data} from server\n")
+         msg = data.decode('utf-8')
+         print(f"client receiving {msg} from server\n")
 
    def send_msg(self):
       msg = input('enter your message: ')

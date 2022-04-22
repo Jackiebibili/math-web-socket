@@ -1,0 +1,64 @@
+Workflow
+1. JOIN_REQUEST
+user-join (handshake)
+         |
+[place incoming user in sessions] (validation)
+         |
+Ack user join
+
+2. TERMINATE_REQUEST
+user-terminate
+         |
+[remove user from the sessions] (validation)
+         |
+ack user terminate
+
+3. MSG_REQUEST
+         |
+[check if user is in the sessions] (validation)
+         | Yes             | No -> err out
+[record the message]
+         |
+[evaluate the message]
+         |
+[place the response in the forwarding queue]
+         |
+[forward the message to sender]
+
+
+Design
+1.
+logger
+- prints to the console at each critical point
+- please refer to the google docs for logging format (https://docs.google.com/document/d/1vtGJRg8uRnypbSNMxR4i1Vp8hAfn5RXV1OnkMB7pqNQ/edit?usp=sharing)
+
+logger functionality:
+- for each output format, it should contain print functions which takes in a number of arguments (additionally including the start timer) in order to populate the message.
+- gets the current time in milliseconds in order to calculate the time interval that the user has attached to the server.
+formats:
+<sys-date-time> client <client-name> <client-action> [expression <math-expression>]
+<sys-date-time> server <server-action> [payload <answer>] duration <number>sec
+
+<client-action> : MSG_REQUEST | JOIN_REQUEST | TERMINATE_REQUEST
+<server-action> : ACK | RESPONSE
+<sys-date-time> : yyyy/mm/dd - hh:mm:ss
+
+
+2.
+packet class
+- has a request type attribute to distinguish different requests
+- the design should follow the structure of the Packet class in /packet.py
+   - each packet is a request
+   - each time server receives some information from the socket, the information is a list of packets. We will treat the socket receiving buffer as a list of requests (minimizing the prescence of requests).
+
+3.
+response forwarder and keep requests that are not closed open
+- use a dictionary to keep track of the ongoing client prescence.
+- forward the response packet using the socket from the sessions.
+
+4.
+driver program
+- creates/emulates a number of clients performing action (i.e. sending math equations and getting the result).
+- generates a pool of simple math expressions and assign each emulated client some math expressions to be evaluated.
+- start running the server and all emulated clients.
+- upon joining of all clients (all clients finish their tasks), exit the main program. Therefore, the server thread will also be stopped.

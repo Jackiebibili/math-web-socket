@@ -5,13 +5,15 @@ PORT = 8080
 
 class TCPHandler(BaseRequestHandler):
    def handle(self):
-      req = self.request
-      client_name = req.getpeername()
+      sock = self.request
+      client_name = sock.getpeername()
       while True:
-         data = req.recv(4096)
+         # server receives info
+         data = sock.recv(4096)
          msg = data.decode('utf-8')
          print(f"server receiving {msg} from {client_name}\n")
-
+         # server sends info back to client
+         sock.send(bytearray(msg.upper().encode()))
 
 class Server(ThreadingTCPServer):
    pass
