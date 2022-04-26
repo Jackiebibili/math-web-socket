@@ -1,5 +1,5 @@
 from user_msg_packet import UserMsgPacket
-from src.packet import PacketType
+from packet import PacketType
 
 class UserDupPacket(UserMsgPacket):
    def __init__(self, username, msg):

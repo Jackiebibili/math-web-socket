@@ -4,7 +4,9 @@ from queue import Queue
 from user_join_packet import UserJoinPacket
 from user_msg_packet import UserMsgPacket
 from user_terminate_packet import UserTerminatePacket
-from src.packet import Packet, PacketType
+from packet import Packet, PacketType
+import random
+import time
 
 DEFAULT_BUFFER_SIZE = 4096 # 4k
 
@@ -15,7 +17,7 @@ class Client():
       self.usr = username
       self.buf_size = buf_size
       self.q = Queue()
-      self.conn_est = Semaphore(0)
+      self.conn_est = Semaphore(2)
 
    def receive_msg(self):
       pkt_handler = Packet()
@@ -31,7 +33,7 @@ class Client():
             elif pkt.type == PacketType.USER_MESSAGE:
                # normal packet
                result = pkt.message.decode('utf-8')
-               # print(result + '\n')
+               print(f"client {self.usr} receiving {result}\n")
             elif pkt.type == PacketType.INVALID:
                # invalid packet - discard
                print("Packet received is invalid and discarded\n")
@@ -41,22 +43,16 @@ class Client():
       while not self.q.empty():
          item = self.q.get()
          self.client_socket.send(item.encode())
-         # print(f"client sent {item} to server\n")
+         print(f"client sent {item} to server\n")
+         time.sleep(random.random())
    
-   def send_math_expressions(self, arr):
+   def send_math_expressions(self):
        # handshaking packet
       self.q.put(UserJoinPacket(self.usr))
       self.conn_est.acquire()
-      for msg in arr:
-         self.send_msg(msg)
+      print(f"Test1")
+      self.send_msg('%d+%d'%(random.randint(1, 10), random.randint(1, 10)))
+      #self.send_msg('%d+%d'%(random.randint(1, 10), random.randint(1, 10)))
+      #self.send_msg('%d+%d'%(random.randint(1, 10), random.randint(1, 10)))
       # closing packet
       self.q.put(UserTerminatePacket(self.usr))
-      
-
-
-# if __name__ == "__main__":
-#    client = Client()
-#    print("client has been created")
-#    Thread(target=client.send_msg).start()
-#    Thread(target=client.receive_msg).start()
-#    pass

@@ -1,7 +1,7 @@
 from queue import Queue
 from socketserver import BaseRequestHandler, ThreadingTCPServer
 from threading import Thread, Semaphore
-from src.packet import Packet, PacketType
+from packet import Packet, PacketType
 from user_msg_packet import UserMsgPacket
 from user_dup_packet import UserDupPacket
 
@@ -12,7 +12,7 @@ def configTCPHandler(buf_size=DEFAULT_BUFFER_SIZE):
    pkt_handler = Packet()
    sessions = dict()
    forward_queue = Queue()
-   forward_sem = Semaphore(0)
+   forward_sem = Semaphore(10)
    def message_forwarder():
       while True:
          if forward_queue.empty():
@@ -49,7 +49,10 @@ def configTCPHandler(buf_size=DEFAULT_BUFFER_SIZE):
                elif pkt.type == PacketType.USER_MESSAGE:
                   # Todo: log client action
                   # Todo: math expr evaluation
-                  ans = 0.0
+                  #ReceiveExpression = pkt.message.decode('utf-8')
+                  #print(f"server receiving {ReceiveExpression} from {client_name}\n")
+                  #ans = eval(ReceiveExpression)
+                  ans = 0
                   result = UserMsgPacket('server', str(ans).encode('utf-8'))
                   forward_queue.put((client_name, sock, result))
                forward_sem.release()

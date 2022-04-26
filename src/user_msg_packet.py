@@ -1,4 +1,4 @@
-from src.packet import Packet, PacketType
+from packet import Packet, PacketType
 import struct
 
 
