@@ -1,0 +1,40 @@
+[2022-04-26 22:45:31] server is receiving join connection request from ('127.0.0.1', 62057) with client username Client 0
+[2022-04-26 22:45:31] server is sending user join ack back to ('127.0.0.1', 62057) with username Client 0
+[2022-04-26 22:45:31] server is receiving join connection request from ('127.0.0.1', 62058) with client username Client 1
+[2022-04-26 22:45:31] server is sending user join ack back to ('127.0.0.1', 62058) with username Client 1
+[2022-04-26 22:45:31] server is receiving (5*7) from ('127.0.0.1', 62057) with client username Client 0
+[2022-04-26 22:45:31] server is receiving join connection request from ('127.0.0.1', 62059) with client username Client 2
+[2022-04-26 22:45:31] server is receiving (7-6) from ('127.0.0.1', 62057) with client username Client 0
+[2022-04-26 22:45:31] server is receiving (3*2) from ('127.0.0.1', 62057) with client username Client 0
+[2022-04-26 22:45:31] server is receiving termination request from ('127.0.0.1', 62057) with client username Client 0
+[2022-04-26 22:45:31] server is sending a message response 35 back to ('127.0.0.1', 62057) with username server
+[2022-04-26 22:45:31] server is receiving (6-1) from ('127.0.0.1', 62058) with client username Client 1
+[2022-04-26 22:45:31] server is sending user join ack back to ('127.0.0.1', 62059) with username Client 2
+[2022-04-26 22:45:31] server is receiving join connection request from ('127.0.0.1', 62060) with client username Client 3
+[2022-04-26 22:45:31] server is receiving (1+2) from ('127.0.0.1', 62058) with client username Client 1
+[2022-04-26 22:45:31] server is receiving (1*7) from ('127.0.0.1', 62058) with client username Client 1
+[2022-04-26 22:45:31] server is sending a message response 1 back to ('127.0.0.1', 62057) with username server
+[2022-04-26 22:45:31] server is sending a message response 6 back to ('127.0.0.1', 62057) with username server
+[2022-04-26 22:45:31] server is sending a message response 5 back to ('127.0.0.1', 62058) with username server
+[2022-04-26 22:45:31] server is receiving (10-2) from ('127.0.0.1', 62059) with client username Client 2
+[2022-04-26 22:45:31] server is sending user join ack back to ('127.0.0.1', 62060) with username Client 3
+[2022-04-26 22:45:31] server is receiving termination request from ('127.0.0.1', 62058) with client username Client 1
+[2022-04-26 22:45:31] server is receiving (3+7) from ('127.0.0.1', 62059) with client username Client 2
+[2022-04-26 22:45:31] server is receiving (4*9) from ('127.0.0.1', 62059) with client username Client 2
+[2022-04-26 22:45:31] server is sending a message response 3 back to ('127.0.0.1', 62058) with username server
+[2022-04-26 22:45:31] server is sending a message response 7 back to ('127.0.0.1', 62058) with username server
+[2022-04-26 22:45:31] server is receiving (7-4) from ('127.0.0.1', 62060) with client username Client 3
+[2022-04-26 22:45:31] server is receiving (8-9) from ('127.0.0.1', 62060) with client username Client 3
+[2022-04-26 22:45:31] server is sending a message response 8 back to ('127.0.0.1', 62059) with username server
+[2022-04-26 22:45:31] server is receiving termination request from ('127.0.0.1', 62059) with client username Client 2
+[2022-04-26 22:45:31] server is receiving (4*10) from ('127.0.0.1', 62060) with client username Client 3
+[2022-04-26 22:45:31] server is receiving termination request from ('127.0.0.1', 62060) with client username Client 3
+[2022-04-26 22:45:31] server is sending a message response 10 back to ('127.0.0.1', 62059) with username server
+[2022-04-26 22:45:31] server is sending a message response 36 back to ('127.0.0.1', 62059) with username server
+[2022-04-26 22:45:31] server is sending a message response 3 back to ('127.0.0.1', 62060) with username server
+[2022-04-26 22:45:31] server is sending a message response -1 back to ('127.0.0.1', 62060) with username server
+[2022-04-26 22:45:31] server is sending a message response 40 back to ('127.0.0.1', 62060) with username server
+[2022-04-26 22:45:33] server is terminating connection from ('127.0.0.1', 62059) with client username Client 2 that lasted 2005 milliseconds
+[2022-04-26 22:45:33] server is terminating connection from ('127.0.0.1', 62057) with client username Client 0 that lasted 2007 milliseconds
+[2022-04-26 22:45:33] server is terminating connection from ('127.0.0.1', 62058) with client username Client 1 that lasted 2007 milliseconds
+[2022-04-26 22:45:33] server is terminating connection from ('127.0.0.1', 62060) with client username Client 3 that lasted 2006 milliseconds
