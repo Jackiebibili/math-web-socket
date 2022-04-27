@@ -1,23 +1,18 @@
 import socket
-from threading import Thread, Semaphore
+from threading import Semaphore
 from queue import Queue
-from user_join_packet import UserJoinPacket
-from user_msg_packet import UserMsgPacket
-from user_terminate_packet import UserTerminatePacket
-from packet import Packet, PacketType
-import random
-import time
+from packet import Packet, PacketType, UserJoinPacket, UserMsgPacket, UserTerminatePacket
 
 DEFAULT_BUFFER_SIZE = 4096 # 4k
-
+PORT = 8080
 class Client():
    def __init__(self, username, buf_size=DEFAULT_BUFFER_SIZE):
       self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-      self.client_socket.connect(('localhost', 8080))
+      self.client_socket.connect(('localhost', PORT))
       self.usr = username
       self.buf_size = buf_size
       self.q = Queue()
-      self.conn_est = Semaphore(2)
+      self.conn_est = Semaphore(0)
 
    def receive_msg(self):
       pkt_handler = Packet()
@@ -33,26 +28,27 @@ class Client():
             elif pkt.type == PacketType.USER_MESSAGE:
                # normal packet
                result = pkt.message.decode('utf-8')
-               print(f"client {self.usr} receiving {result}\n")
             elif pkt.type == PacketType.INVALID:
                # invalid packet - discard
-               print("Packet received is invalid and discarded\n")
+               print("packet received is invalid and discarded\n")
 
    def send_msg(self, msg):
-      self.q.put(UserMsgPacket(self.usr, msg))
+      self.q.put(UserMsgPacket(self.usr, msg.encode('utf-8')))
       while not self.q.empty():
          item = self.q.get()
          self.client_socket.send(item.encode())
-         print(f"client sent {item} to server\n")
-         time.sleep(random.random())
-   
-   def send_math_expressions(self):
+
+   def send_pkt(self, pkt):
+      self.q.put(pkt)
+      while not self.q.empty():
+         item = self.q.get()
+         self.client_socket.send(item.encode())
+
+   def send_math_expressions(self, arr):
        # handshaking packet
-      self.q.put(UserJoinPacket(self.usr))
+      self.send_pkt(UserJoinPacket(self.usr))
       self.conn_est.acquire()
-      print(f"Test1")
-      self.send_msg('%d+%d'%(random.randint(1, 10), random.randint(1, 10)))
-      #self.send_msg('%d+%d'%(random.randint(1, 10), random.randint(1, 10)))
-      #self.send_msg('%d+%d'%(random.randint(1, 10), random.randint(1, 10)))
+      for msg in arr: # receives expressions as an array
+         self.send_msg(msg)
       # closing packet
-      self.q.put(UserTerminatePacket(self.usr))
+      self.send_pkt(UserTerminatePacket(self.usr))
